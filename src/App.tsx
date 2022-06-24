@@ -1,7 +1,7 @@
 import Welcome from './components/Welcome/Welcome';
 import {Route, Routes, useNavigate} from "react-router-dom";
 import Length from './components/Length/Length';
-import {FC, useState} from 'react';
+import React, {FC, useState} from 'react';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -14,11 +14,15 @@ import 'antd/dist/antd.min.css';
 import Thickness from './components/Thickness/Thickness';
 import Procedure from './components/Procedure/Procedure';
 import TotalCost from './components/TotalCost/TotalCost';
+import {useInit} from './hooks/init';
 
 const App: FC = () => {
-  const [collapsed, setCollapsed] = useState(false)
+  const [collapsed, setCollapsed] = useState(true);
   const {Header, Sider, Content} = Layout;
-  const Navigation = useNavigate()
+  const Navigation = useNavigate();
+
+  useInit()
+
   return (
     <Layout className="app">
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -68,4 +72,4 @@ const App: FC = () => {
   );
 }
 
-export default App;
+export default React.memo(App);

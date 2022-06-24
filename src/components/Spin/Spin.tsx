@@ -1,17 +1,16 @@
 import React, {FC, useEffect} from 'react';
 import s from './Spin.module.css'
 import Marquee from "react-fast-marquee"
-import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
-import {offers, setStopOffer, stopOffer} from '../../../redux/Welcome/Welcome';
-import {offer, setFinallyOffer} from '../../../redux/Finally/Finally';
-import Offer from './Offer/Offer';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux';
+import {offers, setStopOffer, stopOffer} from '../../redux/Welcome';
+import {offer, setFinallyOffer} from '../../redux/Finally';
+import Offer from '../Offer/Offer';
 import {Button, Modal} from 'antd';
 import {useNavigate} from 'react-router-dom';
 
-
 const Spin: FC = () => {
   const isStop = useAppSelector(stopOffer);
-  const random = useAppSelector(offer);
+  const finallyOffer = localStorage.getItem('offer');
   const offersArr = useAppSelector(offers);
   const dispatch = useAppDispatch();
   const Navigation = useNavigate()
@@ -25,17 +24,18 @@ const Spin: FC = () => {
     const randOffer = randomizer(offersArr)
     dispatch(setStopOffer(true))
     dispatch(setFinallyOffer(randOffer))
+    localStorage.setItem('offer', randOffer.toString())
   }
 
   useEffect(() => {
-    if (random) {
+    if (finallyOffer) {
       Modal.success({
-        content: `Ваша скидка: ${random}`,
+        content: `Ваша скидка: ${finallyOffer}`,
         okText: 'Хорошо',
         afterClose: () => Navigation('/length')
       })
     }
-  }, [random, Navigation])
+  }, [finallyOffer, Navigation])
 
   return (
     <div>
@@ -49,4 +49,4 @@ const Spin: FC = () => {
   );
 };
 
-export default Spin;
+export default React.memo(Spin);

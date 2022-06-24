@@ -1,6 +1,6 @@
-import welcomeReducer from './Welcome/Welcome';
-import hairOptionsReducer from './HairOptions/HairOptions';
-import finallyReducer from './Finally/Finally';
+import welcomeReducer from './Welcome';
+import hairOptionsReducer from './HairOptions';
+import finallyReducer from './Finally';
 import {configureStore} from '@reduxjs/toolkit';
 
 const store = configureStore({

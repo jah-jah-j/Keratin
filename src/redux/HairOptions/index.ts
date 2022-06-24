@@ -1,10 +1,10 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {RootState} from '../store';
 
-interface IHairOptions {
-	lengths: ILength[],
-	thickness: IThickness,
-	options: IOptions,
+interface IProcedure {
+	keratin: string,
+	botox: string,
+	anything: string,
 }
 
 interface ILength {
@@ -24,6 +24,13 @@ export interface IOptions {
 	damaged: string,
 }
 
+interface IHairOptions {
+	lengths: ILength[],
+	thickness: IThickness,
+	options: IOptions,
+	procedure: IProcedure
+}
+
 const initialState: IHairOptions = {
 	lengths: [
 		{length: 25, topPos: 240},
@@ -41,6 +48,11 @@ const initialState: IHairOptions = {
 		extended: 'Нарощенные волосы',
 		blonde: 'Осветлённые волосы',
 		damaged: 'Сильно поврёждённые волосы',
+	},
+	procedure: {
+		keratin: 'Кератин',
+		botox: 'Ботокс',
+		anything: 'Не знаю',
 	}
 }
 
@@ -53,5 +65,6 @@ const HairOptionsSlice = createSlice({
 export const hairLength = (state: RootState) => state.options.lengths
 export const thicknessOfHairs = (state: RootState) => state.options.thickness
 export const optionsOfHairs = (state: RootState) => state.options.options
+export const hairProcedure = (state: RootState) => state.options.procedure
 
 export default HairOptionsSlice.reducer

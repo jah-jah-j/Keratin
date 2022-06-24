@@ -1,15 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../store';
-
-interface IFinally {
-	name: string,
-	offer: string,
-	hairLength: number,
-	hairThickness: string,
-	hairOptions: string[],
-	procedure: string,
-	totalCost: number,
-}
+import {IFinally} from '../../models/types';
 
 const initialState: IFinally = {
 	name: '',
@@ -25,6 +16,9 @@ const FinallySlice = createSlice({
 	name: 'finally',
 	initialState,
 	reducers: {
+		setName: (state, action: PayloadAction<string>) => {
+			state.name = action.payload
+		},
 		setFinallyOffer: (state, action: PayloadAction<string>) => {
 			state.offer = action.payload
 		},
@@ -46,14 +40,16 @@ const FinallySlice = createSlice({
 	}
 })
 
+export const userName = (state: RootState) => state.finally.name
 export const offer = (state: RootState) => state.finally.offer
 export const hairLength = (state: RootState) => state.finally.hairLength
 export const hairThickness = (state: RootState) => state.finally.hairThickness
 export const hairOptions = (state: RootState) => state.finally.hairOptions
-export const procedure = (state: RootState) => state.finally.procedure
+export const currProcedure = (state: RootState) => state.finally.procedure
 export const totalCost = (state: RootState) => state.finally.totalCost
 
 export const {
+	setName,
 	setFinallyOffer,
 	setProcedure,
 	setHairThickness,

@@ -1,16 +1,25 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import style from './Length.module.css';
 import hairs from '../../assets/images/hair-length.jpg';
 import {Button, Modal} from 'antd';
 import {useNavigate} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux';
-import {setHairLength} from '../../redux/Finally/Finally';
-import {hairLength} from '../../redux/HairOptions/HairOptions';
+import {hairLength} from '../../redux/HairOptions';
+import {setHairLength} from '../../redux/Finally';
 
 const Length = () => {
-  const lengths = useAppSelector(hairLength)
+  const lengths = useAppSelector(hairLength);
   const dispatch = useAppDispatch();
   const Navigation = useNavigate();
+
+  useEffect(() => {
+    const hairLength = localStorage.getItem('length')
+    if (hairLength) {
+      dispatch(setHairLength(+hairLength))
+      showModal(+hairLength)
+    }
+
+  }, [])
 
   const showModal = (length: number, isLonger: boolean = false) => {
     Modal.confirm({
@@ -23,6 +32,11 @@ const Length = () => {
       onOk: () => {
         Navigation('/thickness')
         dispatch(setHairLength(length))
+        localStorage.setItem('length', length.toString())
+      },
+      onCancel: () => {
+        dispatch(setHairLength(0))
+        localStorage.setItem('length', '')
       }
     })
   }
@@ -55,4 +69,4 @@ const Length = () => {
   );
 };
 
-export default Length;
+export default React.memo(Length);
